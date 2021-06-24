@@ -5,6 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
+    const baseUrl = 'http://192.168.1.4:8010'
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState(null);
 
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         return subscriber;
       }, []);
 
-    const AuthState = { user, initializing, signOut };
+    const AuthState = { user, initializing, signOut, baseUrl };
 
     return(
         <AuthContext.Provider value={AuthState}>
