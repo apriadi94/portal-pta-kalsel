@@ -28,12 +28,6 @@ const LoginStack = () => {
                     textShadowColor: 'rgba(0, 0, 0, 0.75)',
                     textShadowOffset: {width: -1, height: 1},
                     textShadowRadius: 10
-                  },
-                  headerBackTitleStyle:{
-                    fontWeight: 'bold',
-                    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-                    textShadowOffset: {width: -1, height: 1},
-                    textShadowRadius: 10
                   }
                   }}/>
           </Stack.Navigator>
