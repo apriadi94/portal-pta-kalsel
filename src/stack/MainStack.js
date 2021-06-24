@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from '../provider/AuthProvider';
-import HomeStack from './HomeStack';
+import AppStack from './AppStack';
 import LoginStack from './LoginStack';
 
 const MainStack = () => {
@@ -10,7 +10,7 @@ const MainStack = () => {
 
     return(
         <NavigationContainer>
-           { user ? <HomeStack/> : <LoginStack/> }
+           { user ? <AppStack/> : <LoginStack/> }
         </NavigationContainer>
     )
 }
