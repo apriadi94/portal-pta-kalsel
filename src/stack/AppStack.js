@@ -10,7 +10,7 @@ import { AuthContext } from '../provider/AuthProvider';
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
-      const { user, baseUrl } = useContext(AuthContext)
+      const { user, baseUrl, setUser } = useContext(AuthContext)
       const addUser = () => {
             axios({
                   method: 'POST',
@@ -24,7 +24,7 @@ const AppStack = () => {
                         Accept: 'Aplication/json'
                   }
             }).then(res => {
-                  console.log(res.data)
+                  setUser({...user, idForUser: res.data.data.id})
             }).catch(err => {
                   console.log(err)
             })

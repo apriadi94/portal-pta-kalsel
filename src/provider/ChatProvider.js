@@ -6,27 +6,19 @@ const socket = socketIOClient(ENDPOINT);
 export const ChatContext = createContext();
 export const ChatProvider = ({ user, children }) => {
 
-    const [auth, setAuth] = useState({
+    const auth = {
         token: 'berenang_renang_ketepian', 
-        userId: user.id, 
+        userId: user.idForUser, 
         username: user.displayName, 
         profileImage : user.photoURL
-    })
-
-    const [room, setRoom] = useState({
-        id: null,
-        name: '',
-        image : ''
-    })
-    
-    const [to, setTo] = useState([])
+    }
 
     useEffect(() => {
         socket.auth = auth;
         socket.connect();
     }, [])
 
-    const chatState = { socket, to, setTo, room, setRoom, auth, setAuth };
+    const chatState = { socket };
 
     return(
         <ChatContext.Provider value={chatState}>

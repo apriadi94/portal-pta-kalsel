@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import axios from 'axios'
 import { AuthContext } from '../../provider/AuthProvider'
-import { useEffect } from 'react/cjs/react.development'
 
-const ChatContactScreen = () => {
+const ChatContactScreen = ({ navigation }) => {
     const { baseUrl, user } = useContext(AuthContext)
     const [contact, setContact] = useState([])
     const [loading, setLoading] = useState(true)
@@ -37,9 +36,16 @@ const ChatContactScreen = () => {
         // eslint-disable-next-line react-native/no-inline-styles
         <View style={{marginTop: 10, marginHorizontal : 20}}>
           
-          {contact.filter(item => item.uid !== user.uid).map((list, index) =>
+          {contact.filter(item => item.id !== user.idForUser).map((list, index) =>
               <TouchableOpacity
-                key={index}>
+                key={index}
+                onPress={() => {
+                  navigation.navigate('ChatContentScreen', { 
+                    to: [{ id: list.id, uid: list.uid, name: list.name, profilePicture: list.profilePicture }],
+                    room: { id: null, name: list.name, image: list.profilePicture }
+                  })
+                }}
+                >
                 <View style={{backgroundColor: '#fff', marginBottom: 10, borderRadius : 10}}>
                   <View
                     style={{

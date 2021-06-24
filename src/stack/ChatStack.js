@@ -4,6 +4,7 @@ import { ChatProvider } from '../provider/ChatProvider';
 import ChatScreen from '../screen/chat/ChatScreen';
 import ChatContactScreen from '../screen/chat/ChatContactScreen';
 import { AuthContext } from '../provider/AuthProvider';
+import ChatContentScreen from '../screen/chat/ChatContentScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,7 @@ const ChatStack = () => {
                     title: 'Chat'
                   }}/>
                 <Stack.Screen name='ChatContactScreen' component={ChatContactScreen} options={{ ...optionsStyle, title: 'List Kontak'}}/>
+                <Stack.Screen name='ChatContentScreen' component={ChatContentScreen} options={{ ...optionsStyle }}/>
             </Stack.Navigator>
           </ChatProvider>
       )

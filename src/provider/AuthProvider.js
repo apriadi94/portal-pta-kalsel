@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         return subscriber;
       }, []);
 
-    const AuthState = { user, initializing, signOut, baseUrl };
+    const AuthState = { user, setUser, initializing, signOut, baseUrl };
 
     return(
         <AuthContext.Provider value={AuthState}>

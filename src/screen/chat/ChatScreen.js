@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { useEffect } from 'react/cjs/react.development'
 
 const ChatScreen = ({ navigation }) => {
     useEffect(() => {
