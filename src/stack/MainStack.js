@@ -1,11 +1,17 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useContext } from 'react'
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthContext } from '../provider/AuthProvider';
+import HomeStack from './HomeStack';
+import LoginStack from './LoginStack';
 
 const MainStack = () => {
+    const {user, initializing} = useContext(AuthContext);
+    if(initializing) return null;
+
     return(
-        <View>
-            <Text>Tes</Text>
-        </View>
+        <NavigationContainer>
+           { user ? <HomeStack/> : <LoginStack/> }
+        </NavigationContainer>
     )
 }
 

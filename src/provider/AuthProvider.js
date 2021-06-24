@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     const [initializing, setInitializing] = useState(true);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
 
     const onAuthStateChanged = async (user) => {
         await setUser(user);
