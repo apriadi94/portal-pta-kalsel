@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "317960334230",
+    "project_id": "portal-pta",
+    "storage_bucket": "portal-pta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317960334230:android:d1efaad9e97f1e679f4bb7",
+        "android_client_info": {
+          "package_name": "com.infopta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317960334230-acons17r5v5p8qk7pc5d09du51k2jdpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infopta",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "317960334230-2ns66jvl9mccjj0lgavg691b6d3f7tem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZdqZoNvl9Foixt0t3buc78o_gscUjAlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317960334230-2ns66jvl9mccjj0lgavg691b6d3f7tem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
