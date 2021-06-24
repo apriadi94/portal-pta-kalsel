@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ChatScreen from '../screen/chat/ChatScreen';
+import ChatContactScreen from '../screen/chat/ChatContactScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +29,11 @@ const optionsStyle = {
 const ChatStack = () => {
     return(
           <Stack.Navigator>
-              <Stack.Screen name='ChatScreen' component={ChatScreen} options={{ ...optionsStyle, title: 'Chat'}}/>
+              <Stack.Screen name='ChatScreen' component={ChatScreen} options={{ 
+                  ...optionsStyle, 
+                  title: 'Chat'
+                }}/>
+              <Stack.Screen name='ChatContactScreen' component={ChatContactScreen} options={{ ...optionsStyle, title: 'List Kontak'}}/>
           </Stack.Navigator>
       )
 }
