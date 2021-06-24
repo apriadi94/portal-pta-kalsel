@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -11,13 +12,32 @@ export const AuthProvider = ({ children }) => {
         await setUser(user);
         if (initializing) setInitializing(false);
     }
+
+    const signOutGoogle = async () => {
+      try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+      } catch (error) {
+        alert(error)
+      }
+    };
+
+    const signOut = async () => {
+        auth()
+        .signOut()
+        .then(() => {
+          if(user.providerData[0].providerId === 'google.com'){
+              signOutGoogle();
+          }
+        });
+    };
     
       useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber;
       }, []);
 
-    const AuthState = { user, initializing };
+    const AuthState = { user, initializing, signOut };
 
     return(
         <AuthContext.Provider value={AuthState}>
