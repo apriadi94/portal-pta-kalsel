@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
 import InformasiStack from './InformasiStack';
 import YoutubeStack from './YoutubeStack';
+import axios from 'axios';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
+      const { user, baseUrl } = useContext(AuthContext)
+      const addUser = () => {
+            axios({
+                  method: 'POST',
+                  url: `${baseUrl}/api/user`,
+                  data: {
+                        name: user.displayName,
+                        uid: user.uid, 
+                        profilePicture: user.photoURL
+                  },
+                  headers:{
+                        Accept: 'Aplication/json'
+                  }
+            }).then(res => {
+                  console.log(res.data)
+            }).catch(err => {
+                  console.log(err)
+            })
+      }
+
+      useEffect(() => {
+            addUser()
+      }, [])
+
     return(
         <Drawer.Navigator>
               <Drawer.Screen name='Home' component={HomeStack}/>
