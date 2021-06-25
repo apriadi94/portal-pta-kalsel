@@ -6,8 +6,6 @@ const socket = socketIOClient(ENDPOINT);
 export const ChatContext = createContext();
 export const ChatProvider = ({ user, children }) => {
 
-    console.log(user.idForUser)
-
     const auth = {
         token: 'berenang_renang_ketepian', 
         userId:  user.idForUser, 

@@ -12,7 +12,6 @@ const ChatContentScreen = ({ navigation, route }) => {
     const [OnPageSearch, setOnPageSearch] = useState(null)
     const [OnIndexSerach, setOnIndexSearch] = useState(0)
 
-
     useEffect(() => {
         navigation.setOptions({
             title: to[0].name
