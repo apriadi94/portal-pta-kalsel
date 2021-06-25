@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
     const baseUrl = 'http://192.168.1.4:8010'
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState(null);
+    const [loadingAuth, setLoadingAuth] = useState(true)
 
     const onAuthStateChanged = async (user) => {
         await setUser(user);
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         auth()
         .signOut()
         .then(() => {
-          if(user.providerData[0].providerId === 'google.com'){
+          if(user._user.providerData[0].providerId === 'google.com'){
               signOutGoogle();
           }
         });
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }) => {
         return subscriber;
       }, []);
 
-    const AuthState = { user, setUser, initializing, signOut, baseUrl };
+    const AuthState = { user, setUser, initializing, signOut, baseUrl, setLoadingAuth };
 
     return(
         <AuthContext.Provider value={AuthState}>

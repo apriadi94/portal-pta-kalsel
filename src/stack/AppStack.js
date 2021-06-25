@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { View, Text } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
@@ -10,15 +11,15 @@ import { AuthContext } from '../provider/AuthProvider';
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
-      const { user, baseUrl, setUser } = useContext(AuthContext)
-      const addUser = () => {
-            axios({
+      const { user, baseUrl, setUser, loadingAuth, setLoadingAuth } = useContext(AuthContext)
+      const addUser = async () => {
+            await axios({
                   method: 'POST',
                   url: `${baseUrl}/api/user`,
                   data: {
-                        name: user.displayName,
-                        uid: user.uid, 
-                        profilePicture: user.photoURL
+                        name: user._user.displayName ??  user._user.phoneNumber,
+                        uid:  user._user.uid, 
+                        profilePicture:  user._user.photoURL
                   },
                   headers:{
                         Accept: 'Aplication/json'
@@ -28,6 +29,7 @@ const AppStack = () => {
             }).catch(err => {
                   console.log(err)
             })
+            setLoadingAuth(false)
       }
 
       useEffect(() => {
@@ -35,6 +37,8 @@ const AppStack = () => {
       }, [])
 
     return(
+      loadingAuth ? 
+        <View><Text>Loading...</Text></View> :
         <Drawer.Navigator>
               <Drawer.Screen name='Home' component={HomeStack}/>
               <Drawer.Screen name='Informasi' component={InformasiStack}/>

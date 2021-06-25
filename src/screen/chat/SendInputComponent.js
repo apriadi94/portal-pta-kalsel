@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import { ChatContext } from '../../provider/ChatProvider'
 
-const SendInputComponent = ({ room, to }) => {
+const SendInputComponent = ({ roomId, to }) => {
     const { socket } = useContext(ChatContext)
     const [message, setMessage] = useState('')
   
     const sendChat = () => {
-      socket.emit('STORE_MESSAGE_CHAT', { roomId : room.id, message, type : 'TEXT', to })
+      socket.emit('STORE_MESSAGE_CHAT', { roomId, message, type : 'TEXT', to })
       setMessage('')
     }
 

@@ -6,16 +6,22 @@ const socket = socketIOClient(ENDPOINT);
 export const ChatContext = createContext();
 export const ChatProvider = ({ user, children }) => {
 
+    console.log(user.idForUser)
+
     const auth = {
         token: 'berenang_renang_ketepian', 
-        userId: user.idForUser, 
-        username: user.displayName, 
-        profileImage : user.photoURL
+        userId:  user.idForUser, 
+        username:  user.displayName, 
+        profileImage :  user.photoURL
     }
 
     useEffect(() => {
         socket.auth = auth;
         socket.connect();
+
+        return(() => {
+            socket.disconnect()
+        })
     }, [])
 
     const chatState = { socket };
