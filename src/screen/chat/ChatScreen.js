@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native'
 import { ChatContext } from '../../provider/ChatProvider'
+import backgroundChat from '../../assets/chat-background.png'
 
 const ChatScreen = ({ navigation }) => {
     const { socket } = useContext(ChatContext)
@@ -25,7 +26,7 @@ const ChatScreen = ({ navigation }) => {
         })
     }, [])
     return(
-      <View style={{flex: 1}}>
+      <ImageBackground source={backgroundChat} style={{flex: 1}}>
       {loading ? (
         <View>
           <Text>Loading...</Text>
@@ -79,7 +80,7 @@ const ChatScreen = ({ navigation }) => {
           )}
         </View>
       )}
-    </View>
+    </ImageBackground>
     )
 }
 

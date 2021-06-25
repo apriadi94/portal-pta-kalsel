@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native'
 import axios from 'axios'
 import { AuthContext } from '../../provider/AuthProvider'
+import backgroundChat from '../../assets/chat-background.png'
 
 const ChatContactScreen = ({ navigation }) => {
     const { baseUrl, user } = useContext(AuthContext)
@@ -27,7 +28,7 @@ const ChatContactScreen = ({ navigation }) => {
         getContact()
     }, [])
     return(
-        <View style={{flex: 1}}>
+        <ImageBackground source={backgroundChat} style={{flex: 1}}>
       {loading ? (
         <View>
           <Text>Loading...</Text>
@@ -68,7 +69,7 @@ const ChatContactScreen = ({ navigation }) => {
           )}
         </View>
       )}
-    </View>
+    </ImageBackground>
     )
 }
 

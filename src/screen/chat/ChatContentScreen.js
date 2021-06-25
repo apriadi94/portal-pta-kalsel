@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import { View, Text, ScrollView, Keyboard } from 'react-native'
+import { View, Text, ScrollView, Keyboard, ImageBackground } from 'react-native'
 import { ChatContext } from '../../provider/ChatProvider';
 import SendInputComponent from './SendInputComponent';
+import backgroundChat from '../../assets/chat-background.png'
+
 
 const ChatContentScreen = ({ navigation, route }) => {
     const { socket } = useContext(ChatContext)
@@ -39,7 +41,7 @@ const ChatContentScreen = ({ navigation, route }) => {
     const _keyboardDidShow = () => scrollViewRef.current.scrollToEnd({animated: true});
 
     return(
-           <View style={{flex : 1}}>
+           <ImageBackground source={backgroundChat} style={{flex : 1}}>
                 <ScrollView
                         ref={scrollViewRef}
                         onContentSizeChange={() => {
@@ -53,9 +55,10 @@ const ChatContentScreen = ({ navigation, route }) => {
                                 chat.map((list, index) =>
                                         <View key={index} style={{marginTop : 10, alignItems : list.isFromSelf ? 'flex-end' : 'flex-start'}}>
                                                 <View style={{backgroundColor : list.id === OnPageSearch ? 'white' : 'rgba(76, 175, 80, 0)', borderRadius : 10}}>
-                                                    <View style={{backgroundColor : list.isFromSelf ? '#80ffaa' : '#b3daff', height : 50, borderRadius : 10, marginHorizontal : 10, marginVertical : 10}}>
+                                                    <View style={{backgroundColor : list.isFromSelf ? '#80ffaa' : '#b3daff', borderRadius : 10, marginHorizontal : 10, marginVertical : 10}}>
                                                         <View style={{marginTop : 5, marginLeft : 10, marginRight : 10}}>
                                                             <Text style={{fontSize : 14}}>{list.content}</Text>
+                                                            <Text style={{fontSize : 12, color: 'gray', marginTop: 2, textAlign: 'right', marginBottom : 5}}>{list.jam}</Text>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -66,7 +69,7 @@ const ChatContentScreen = ({ navigation, route }) => {
                     }
                     </ScrollView>
                     <SendInputComponent roomId={roomId} to={to}/>
-            </View>
+            </ImageBackground>
     )
 }
 
