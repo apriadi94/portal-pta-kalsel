@@ -1,13 +1,19 @@
 import React, { useContext } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, ScrollView } from 'react-native'
 import { AuthContext } from '../../provider/AuthProvider'
+import HeaderComponent from './HeaderComponent'
+import ChatButtonComponent from './ChatButtonComponent'
 
-const HomeScreen = () => {
-    const { signOut } = useContext(AuthContext)
+const HomeScreen = ({navigation}) => {
+    const { signOut, countChat } = useContext(AuthContext)
     return(
-        <View style={{flex : 1}}>
-            <Text>Home Screen</Text>
-            <Button title="logout" onPress={signOut}/>
+        <View style={{flex : 1, backgroundColor: '#F3F6FF'}}>
+            <ScrollView>
+                <HeaderComponent navigation={navigation}/>
+            </ScrollView>
+            {
+                countChat > 0 ? <ChatButtonComponent navigation={navigation} countChat={countChat}/> : null
+            }
         </View>
     )
 }

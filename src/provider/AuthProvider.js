@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
     const baseUrl = 'http://192.168.1.4:8010'
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState(null);
+    const [countChat, setCountChat] = useState(0)
     const [loadingAuth, setLoadingAuth] = useState(true)
 
     const onAuthStateChanged = async (user) => {
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         return subscriber;
       }, []);
 
-    const AuthState = { user, setUser, initializing, signOut, baseUrl, setLoadingAuth };
+    const AuthState = { user, setUser, initializing, signOut, baseUrl, countChat, setLoadingAuth };
 
     return(
         <AuthContext.Provider value={AuthState}>
