@@ -7,19 +7,21 @@ import InformasiStack from './InformasiStack';
 import YoutubeStack from './YoutubeStack';
 import axios from 'axios';
 import { AuthContext } from '../provider/AuthProvider';
+import OneSignal from 'react-native-onesignal';
 
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
       const { user, baseUrl, setUser, loadingAuth, setLoadingAuth } = useContext(AuthContext)
-      const addUser = async () => {
+      const onIds = async (device) => {
             await axios({
                   method: 'POST',
                   url: `${baseUrl}/api/user`,
                   data: {
                         name: user._user.displayName ??  user._user.phoneNumber,
                         uid:  user._user.uid, 
-                        profilePicture:  user._user.photoURL
+                        profilePicture:  user._user.photoURL,
+                        tokenNotif: device.userId
                   },
                   headers:{
                         Accept: 'Aplication/json'
@@ -33,7 +35,7 @@ const AppStack = () => {
       }
 
       useEffect(() => {
-            addUser()
+            OneSignal.addEventListener('ids', onIds);
       }, [])
 
     return(
