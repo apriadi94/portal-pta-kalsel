@@ -1,6 +1,7 @@
 import React, { useEffect, useState, createContext } from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -34,13 +35,27 @@ export const AuthProvider = ({ children }) => {
           }
         });
     };
+
+    const getUnreadMessage = (userId) => {
+      axios({
+        method: 'get',
+        url: `${baseUrl}/api/chat/${userId}`,
+        headers: {
+          Accept : 'aplication/json'
+        }
+      }).then(res => {
+        setCountChat(res.data.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
     
       useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber;
       }, []);
 
-    const AuthState = { user, setUser, initializing, signOut, baseUrl, countChat, setLoadingAuth };
+    const AuthState = { user, setUser, initializing, signOut, baseUrl, countChat, getUnreadMessage, setLoadingAuth };
 
     return(
         <AuthContext.Provider value={AuthState}>

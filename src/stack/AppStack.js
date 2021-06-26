@@ -12,7 +12,7 @@ import OneSignal from 'react-native-onesignal';
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
-      const { user, baseUrl, setUser, loadingAuth, setLoadingAuth } = useContext(AuthContext)
+      const { user, baseUrl, setUser, loadingAuth, setLoadingAuth, getUnreadMessage } = useContext(AuthContext)
       const onIds = async (device) => {
             await axios({
                   method: 'POST',
@@ -28,6 +28,7 @@ const AppStack = () => {
                   }
             }).then(res => {
                   setUser({...user, idForUser: res.data.data.id})
+                  getUnreadMessage(res.data.data.id)
             }).catch(err => {
                   console.log(err)
             })

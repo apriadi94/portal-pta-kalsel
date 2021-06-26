@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import { View, Text, ScrollView, Keyboard, ImageBackground } from 'react-native'
+import { AuthContext } from '../../provider/AuthProvider';
 import { ChatContext } from '../../provider/ChatProvider';
 import SendInputComponent from './SendInputComponent';
 import backgroundChat from '../../assets/chat-background.png'
 
 
 const ChatContentScreen = ({ navigation, route }) => {
+    const { user, getUnreadMessage } = useContext(AuthContext)
     const { socket } = useContext(ChatContext)
     const { to, room } = route.params;
     const [roomId, setRoomid] = useState(room.id)
@@ -27,6 +29,7 @@ const ChatContentScreen = ({ navigation, route }) => {
             setChat(message)
             setRoomid(resRoomId)
             socket.emit('READ_MESSAGE', resRoomId)
+            getUnreadMessage(user.idForUser)
             setLoadingChat(false)
         })
 

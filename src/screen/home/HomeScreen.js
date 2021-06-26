@@ -10,6 +10,7 @@ const HomeScreen = ({navigation}) => {
         <View style={{flex : 1, backgroundColor: '#F3F6FF'}}>
             <ScrollView>
                 <HeaderComponent navigation={navigation}/>
+                <Button onPress={signOut} title="logout"/>
             </ScrollView>
             {
                 countChat > 0 ? <ChatButtonComponent navigation={navigation} countChat={countChat}/> : null
