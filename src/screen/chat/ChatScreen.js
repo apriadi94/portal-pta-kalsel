@@ -1,30 +1,46 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, Image, ImageBackground, TextInput } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { ChatContext } from '../../provider/ChatProvider'
 import backgroundChat from '../../assets/chat-background.png'
 
 const ChatScreen = ({ navigation }) => {
     const { socket } = useContext(ChatContext)
     const [conversation, setConversation] = useState([])
+    const [search, setSearch] = useState('')
     const [loading, setLoading] = useState(true)
+    const [headerShown, setheaderShown] = useState(true)
 
     useEffect(() => {
         navigation.setOptions({
+          headerShown,
             headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('ChatContactScreen')}>
-                  <View style={{ marginRight : 10 }}>
-                    <Text>+</Text>
-                  </View>
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity onPress={() => navigation.navigate('ChatContactScreen')}>
+                    <View style={{ marginRight : 20 }}>
+                      <Icon name="plus" color="gray" size={18} />
+                    </View>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => setheaderShown(false)}>
+                    <View style={{ marginRight : 10 }}>
+                      <Icon name="search" color="gray" size={18} />
+                    </View>
+                </TouchableOpacity>
+                </View>
               ),
         })
 
         socket.emit('REQUEST_CONVERSATION')
         socket.on('CONVERSATION_SENT', data => {
-          setConversation(data)
+          if(search !== ''){
+            const dataSearch = data.filter(item => item.room.name.toLowerCase().includes(search.toLowerCase()))
+            setConversation(dataSearch)
+          }else{
+            setConversation(data)
+          }
           setLoading(false)
         })
-    }, [])
+    }, [headerShown, search])
     return(
       <ImageBackground source={backgroundChat} style={{flex: 1}}>
       {loading ? (
@@ -33,7 +49,24 @@ const ChatScreen = ({ navigation }) => {
         </View>
       ) : (
         // eslint-disable-next-line react-native/no-inline-styles
-        <View style={{marginTop: 10, marginHorizontal : 10}}>
+        <React.Fragment>
+          {
+            !headerShown ?
+            <View style={{ backgroundColor: 'white' }}>
+              <View style={{marginHorizontal : 10, flexDirection: 'row'}}>
+                <TouchableOpacity onPress={() => {
+                  setheaderShown(true)
+                  setSearch('')
+                }} style={{ justifyContent: 'center', alignItems: 'center', marginRight : 20, marginTop: -5 }}>
+                  <Icon name="arrow-left" size={20} />
+                </TouchableOpacity>
+                <View style={{ flex: 1, borderBottomColor: 'gray' }}>
+                  <TextInput style={{width: '100%'}} value={search} onChangeText={text => setSearch(text)} placeholder='Cari'/>
+                </View>
+              </View>
+            </View> : null
+          }
+          <View style={{marginTop: 10, marginHorizontal : 10}}>
           {conversation.map((list, index) =>
               <TouchableOpacity
                 key={index}
@@ -79,6 +112,7 @@ const ChatScreen = ({ navigation }) => {
               </TouchableOpacity>
           )}
         </View>
+        </React.Fragment>
       )}
     </ImageBackground>
     )
