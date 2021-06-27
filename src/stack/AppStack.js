@@ -44,7 +44,7 @@ const AppStack = () => {
         <View><Text>Loading...</Text></View> :
         <Drawer.Navigator>
               <Drawer.Screen name='Home' component={HomeStack}/>
-              <Drawer.Screen name='Informasi' component={InformasiStack}/>
+              <Drawer.Screen name='Informasi Berita' component={InformasiStack}/>
               <Drawer.Screen name='Chat' component={ChatStack}/>
               <Drawer.Screen name='Youtube' component={YoutubeStack}/>
         </Drawer.Navigator>
