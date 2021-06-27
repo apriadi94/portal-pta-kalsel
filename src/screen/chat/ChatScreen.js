@@ -14,6 +14,13 @@ const ChatScreen = ({ navigation }) => {
     useEffect(() => {
         navigation.setOptions({
           headerShown,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                  <View style={{ marginLeft : 25 }}>
+                    <Icon name="navicon" color="gray" size={18} />
+                  </View>
+              </TouchableOpacity>
+            ),
             headerRight: () => (
                 <View style={{flexDirection: 'row'}}>
                   <TouchableOpacity onPress={() => navigation.navigate('ChatContactScreen')}>
