@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import { ChatContext } from '../../provider/ChatProvider'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,6 +23,18 @@ const SendInputComponent = ({ scrollViewRef, roomId, to }) => {
       socket.emit('STORE_MESSAGE_CHAT', { roomId, message, type : 'TEXT', to })
       setMessage('')
     }
+
+    const typing = () => {
+        socket.emit('TYPE', {roomId, to, status: true})
+      }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            socket.emit('TYPE', {roomId, to, status: false})
+        }, 1000)
+    
+        return () => clearTimeout(timeout)
+    }, [message])
 
 
     const openLibrary = () => {
@@ -97,12 +109,17 @@ const SendInputComponent = ({ scrollViewRef, roomId, to }) => {
         })
       }
 
+
     return(
         <View style={{justifyContent : 'flex-end'}}>
                <View style={{flexDirection : 'row'}}>
+
                     <View style={{flex : 1, flexDirection: 'row', marginHorizontal : 10, backgroundColor : 'white', marginBottom : 10, borderRadius : 10}}>
                         <View style={{flex: 1}}>
-                            <TextInput onContentSizeChange={() => scrollViewRef.current.scrollToEnd({animated: true})} multiline={true} style={{color : 'black', fontSize : 18, marginLeft : 10}} value={message} onChangeText={(text) => setMessage(text)}/>
+                            <TextInput onContentSizeChange={() => scrollViewRef.current.scrollToEnd({animated: true})} multiline={true} style={{color : 'black', fontSize : 18, marginLeft : 10}} value={message} onChangeText={(text) => {
+                            setMessage(text)
+                            typing()
+                        }}/>
                         </View>
                         <TouchableOpacity onPress={openLibrary} style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 20, marginBottom: 15 }}>
                             <Icon name="paperclip" color="gray" size={20} />
