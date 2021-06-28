@@ -59,7 +59,7 @@ const SendInputComponent = ({ scrollViewRef, roomId, to }) => {
                     uri: response.assets[0].uri,
                     type: response.assets[0].type,
                     name: response.assets[0].fileName
-                }, { height: response.assets[0].height, width: response.assets[0].width })
+                })
             }
         });
     }
@@ -86,7 +86,7 @@ const SendInputComponent = ({ scrollViewRef, roomId, to }) => {
                 uri: response.assets[0].uri,
                 type: response.assets[0].type,
                 name: response.assets[0].fileName
-            }, { height: response.assets[0].height, width: response.assets[0].width })
+            })
           }
         });
       }
@@ -103,7 +103,7 @@ const SendInputComponent = ({ scrollViewRef, roomId, to }) => {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res => {
-            socket.emit('STORE_MESSAGE_CHAT', { roomId, message: image.name, type : image.type, to, url: res.data.data, height: screen.height, width: screen.width })
+            socket.emit('STORE_MESSAGE_CHAT', { roomId, message: image.name, type : image.type, to, url: res.data.data, height: res.data.height, width: res.data.width })
         }).catch(err => {
             console.log(err)
         })
@@ -122,10 +122,10 @@ const SendInputComponent = ({ scrollViewRef, roomId, to }) => {
                         }}/>
                         </View>
                         <TouchableOpacity onPress={openLibrary} style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 20, marginBottom: 15 }}>
-                            <Icon name="paperclip" color="gray" size={20} />
+                            <Icon name="paperclip" color="gray" size={23} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={openCamera} style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 20, marginBottom: 15 }}>
-                            <Icon name="camera" color="gray" size={20} />
+                            <Icon name="camera" color="gray" size={23} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity disabled={message === ''} onPress={sendChat} style={{ justifyContent: 'flex-end', alignItems: 'center', width : 40, marginBottom : 10, marginRight : 5, borderRadius : 20}}>
