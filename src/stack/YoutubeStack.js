@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import YoutubeScreen from '../screen/youtube/YoutubeScreen';
+import VideoScreen from '../screen/youtube/VideoScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const YoutubeStack = () => {
     return(
           <Stack.Navigator>
               <Stack.Screen name='YoutubeScreen' component={YoutubeScreen} options={{ ...optionsStyle, title: 'Chanel Youtube'}}/>
+              <Stack.Screen name='Video' component={VideoScreen} options={optionsStyle}/>
           </Stack.Navigator>
       )
 }

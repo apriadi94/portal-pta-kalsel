@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios'
 import moment from 'moment'
 
@@ -29,6 +30,13 @@ const YoutubeScreen = ({ navigation }) => {
     useEffect(() => {
         navigation.setOptions({
             title: 'Youtube Chanel',
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                  <View style={{ marginLeft : 25 }}>
+                    <Icon name="navicon" color="gray" size={18} />
+                  </View>
+              </TouchableOpacity>
+            ),
         });
         GetData();
     }, [])
