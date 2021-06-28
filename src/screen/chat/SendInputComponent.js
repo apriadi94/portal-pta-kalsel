@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import { ChatContext } from '../../provider/ChatProvider'
 
@@ -11,11 +11,26 @@ const SendInputComponent = ({ roomId, to }) => {
       setMessage('')
     }
 
+    const typing = () => {
+        socket.emit('TYPE', {roomId, to, status: true})
+      }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            socket.emit('TYPE', {roomId, to, status: false})
+        }, 1000)
+    
+        return () => clearTimeout(timeout)
+    }, [message])
+
     return(
         <View style={{justifyContent : 'flex-end'}}>
                <View style={{flexDirection : 'row'}}>
                     <View style={{flex : 1, marginHorizontal : 10, backgroundColor : 'white', height : 40, marginBottom : 10, borderRadius : 10}}>
-                            <TextInput style={{color : 'black', fontSize : 18, marginLeft : 10}} value={message} onChangeText={(text) => setMessage(text)}/>
+                        <TextInput style={{color : 'black', fontSize : 18, marginLeft : 10}} value={message} onChangeText={(text) => {
+                            setMessage(text)
+                            typing()
+                        }}/>
                     </View>
                     <TouchableOpacity onPress={sendChat} style={{backgroundColor : 'green', width : 40, marginBottom : 10, marginRight : 5, borderRadius : 20}}>
                         <View style={{backgroundColor : 'green', width : 50, marginBottom : 5, marginRight : 5, borderRadius : 20}}>

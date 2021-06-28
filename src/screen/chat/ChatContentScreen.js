@@ -15,12 +15,13 @@ const ChatContentScreen = ({ navigation, route }) => {
     const [loadingChat, setLoadingChat] = useState(true)
     const [OnPageSearch, setOnPageSearch] = useState(null)
     const [OnIndexSerach, setOnIndexSearch] = useState(0)
+    const [isTyping, setIsTyping] = useState(false)
 
     const scrollViewRef = useRef();
 
     useEffect(() => {
         navigation.setOptions({
-            title: to[0].name
+            title: isTyping? 'sedang mengetik' : to[0].name
         })
 
         socket.emit('REQUEST_MESSAGE', ({ roomId, to }))
@@ -33,13 +34,18 @@ const ChatContentScreen = ({ navigation, route }) => {
             setLoadingChat(false)
         })
 
+        socket.on('TYPING', (status) => {
+            setIsTyping(status)
+        })
+
         Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
 
         return(() => {
             socket.removeAllListeners("MESSAGE_SENT");
             Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
         })
-    }, [])
+    }, [isTyping])
+
 
     const _keyboardDidShow = () => scrollViewRef.current.scrollToEnd({animated: true});
 
