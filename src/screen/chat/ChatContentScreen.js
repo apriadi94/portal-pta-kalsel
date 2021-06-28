@@ -19,8 +19,6 @@ const ChatContentScreen = ({ navigation, route }) => {
 
     const scrollViewRef = useRef();
 
-    const screenWidth = Math.round(Dimensions.get('window').width);  
-
     useEffect(() => {
         navigation.setOptions({
             title: isTyping? 'sedang mengetik' : to[0].name
@@ -75,7 +73,7 @@ const ChatContentScreen = ({ navigation, route }) => {
                                                                     <Text style={{fontSize : 12, color: 'gray', marginTop: 2, textAlign: 'right', marginBottom : 5}}>{list.jam}</Text>                                                  
                                                                 </React.Fragment> :
                                                                 <React.Fragment>
-                                                                    <Image source={{ uri : `${baseUrl}/${list.url}`}} style={{ width: list.width / 7, height: list.height / 7 }} resizeMode="contain"/>
+                                                                    <Image source={{ uri : `${baseUrl}/${list.url}`}} style={{ width: list.width / 5, height: list.height / 5 }} resizeMode="contain"/>
                                                                     <Text style={{fontSize : 12, color: 'gray', marginTop: 2, textAlign: 'right', marginBottom : 5}}>{list.jam}</Text>                                                  
                                                                 </React.Fragment>
                                                             }
